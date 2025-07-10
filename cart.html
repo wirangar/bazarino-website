@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title data-lang="cart-title">سبد خرید | بازارینو</title>
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="assets/css/main.css">
+</head>
+<body>
+  <!-- Header -->
+  <header class="main-header">
+    <div class="container">
+      <div class="language-switcher">
+        <button class="lang-btn active" data-lang="fa">فارسی</button>
+        <button class="lang-btn" data-lang="en">English</button>
+        <button class="lang-btn" data-lang="it">Italiano</button>
+      </div>
+      <div class="logo-container">
+        <picture>
+          <source srcset="assets/img/logo.webp" type="image/webp">
+          <img src="assets/img/logo.png" alt="لوگوی بازارینو" class="logo" loading="lazy">
+        </picture>
+      </div>
+      <h1 data-lang="header-title">بازارینو | فروشگاه ایرانی در ایتالیا</h1>
+      <p class="slogan" data-lang="slogan">اصالت ایرانی، راحتی ایتالیایی <strong>IRIT</strong></p>
+    </div>
+  </header>
+
+  <main class="main-content">
+    <section class="cart-section container">
+      <h2 class="section-title" data-lang="cart-title">سبد خرید</h2>
+      <table class="cart-table">
+        <thead>
+          <tr>
+            <th data-lang="cart-product">محصول</th>
+            <th data-lang="cart-price">قیمت</th>
+            <th data-lang="cart-quantity">تعداد</th>
+            <th data-lang="cart-subtotal">جمع</th>
+            <th data-lang="cart-actions">عملیات</th>
+          </tr>
+        </thead>
+        <tbody id="cart-items"></tbody>
+      </table>
+      <div class="cart-total">
+        <span data-lang="cart-total">جمع کل: </span><span id="cart-total-amount">0 €</span>
+      </div>
+
+      <div class="order-form">
+        <h3 data-lang="order-form-title">تکمیل سفارش</h3>
+        <form id="order-form">
+          <div class="form-group">
+            <label for="name" data-lang="form-name">نام و نام خانوادگی</label>
+            <input type="text" id="name" required>
+          </div>
+          <div class="form-group">
+            <label for="phone" data-lang="form-phone">شماره تلفن</label>
+            <input type="tel" id="phone" required>
+          </div>
+          <div class="form-group">
+            <label for="address" data-lang="form-address">آدرس</label>
+            <input type="text" id="address" required>
+          </div>
+          <div class="form-group">
+            <label for="postal-code" data-lang="form-postal-code">کد پستی</label>
+            <input type="text" id="postal-code" required>
+          </div>
+          <div class="form-group">
+            <label for="notes" data-lang="form-notes">یادداشت (اختیاری)</label>
+            <textarea id="notes"></textarea>
+          </div>
+          <div class="form-group">
+            <label for="discount-code" data-lang="form-discount">کد تخفیف</label>
+            <input type="text" id="discount-code">
+          </div>
+          <button type="submit" data-lang="form-submit">ثبت سفارش</button>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="main-footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="social-links">
+          <a href="https://t.me/Bazarino_perugia_bot" aria-label="تلگرام"><i class="fab fa-telegram"></i></a>
+          <a href="#" aria-label="اینستاگرام"><i class="fab fa-instagram"></i></a>
+          <a href="https://
+
+wa.me/yournumber" aria-label="واتساپ"><i class="fab fa-whatsapp"></i></a>
+          <a href="#" aria-label="ایمیل"><i class="fas fa-envelope"></i></a>
+        </div>
+        
+        <div class="footer-links">
+          <a href="index.html" data-lang="footer-home">صفحه اصلی</a>
+          <a href="#" data-lang="footer-products">محصولات</a>
+          <a href="about.html" data-lang="footer-about">درباره ما</a>
+          <a href="#" data-lang="footer-contact">تماس با ما</a>
+          <a href="#" data-lang="footer-faq">سوالات متداول</a>
+          <a href="#" data-lang="footer-terms">شرایط و ضوابط</a>
+        </div>
+        
+        <div class="copyright">
+          <small>© <span id="year">2023</span> بازارینو - تمام حقوق محفوظ است</small><br>
+          <small data-lang="copyright">طراحی شده با <span class="heart">♥</span> توسط تیم بازارینو</small>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- WhatsApp Button -->
+  <a href="https://wa.me/yournumber" class="whatsapp-float" aria-label="چت در واتساپ">
+    <i class="fab fa-whatsapp"></i>
+  </a>
+
+  <script src="assets/js/main.js"></script>
+</body>
+</html>
