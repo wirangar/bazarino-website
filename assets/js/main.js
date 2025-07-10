@@ -170,11 +170,14 @@ document.addEventListener('DOMContentLoaded', () => {
       const key = element.dataset.lang;
       element.innerHTML = translations[currentLang][key] || element.innerHTML;
     });
-    document.querySelector('#search-input').placeholder = translations[currentLang]['search-placeholder'];
+    const searchInput = document.querySelector('#search-input');
+    if (searchInput) {
+      searchInput.placeholder = translations[currentLang]['search-placeholder'];
+    }
     document.documentElement.lang = currentLang;
     document.dir = currentLang === 'fa' ? 'rtl' : 'ltr';
-    if (window.location.pathname.includes('index.html')) {
-      loadProducts(document.getElementById('search-input').value);
+    if (window.location.pathname.includes('index.html') || window.location.pathname === '/') {
+      loadProducts(document.getElementById('search-input')?.value || '');
     }
   }
 
@@ -193,27 +196,33 @@ document.addEventListener('DOMContentLoaded', () => {
           product.cat.toLowerCase().includes(searchTerm.toLowerCase())
         );
         const productsContainer = document.getElementById('products-container');
-        productsContainer.innerHTML = '';
-        filteredProducts.forEach(product => {
-          if (product.is_bestseller) {
-            const slide = document.createElement('div');
-            slide.className = 'swiper-slide product-card';
-            slide.innerHTML = `
-              <picture>
-                <source srcset="${product.image_url}.webp" type="image/webp">
-                <img src="${product.image_url}" alt="${product[currentLang]}" loading="lazy">
-              </picture>
-              <div class="product-info">
-                <h3>${product[currentLang]}</h3>
-                <p class="product-price">${product.weight} - €${product.price.toFixed(2)}</p>
-                <button class="add-to-cart" data-id="${product.id}">افزودن به سبد</button>
-              </div>
-            `;
-            productsContainer.appendChild(slide);
-          }
-        });
-        initializeSwiper();
-        addCartEventListeners();
+        if (productsContainer) {
+          productsContainer.innerHTML = '';
+          filteredProducts.forEach(product => {
+            if (product.is_bestseller) {
+              const slide = document.createElement('div');
+              slide.className = 'swiper-slide product-card';
+              slide.innerHTML = `
+                <picture>
+                  <source srcset="${product.image_url}.webp" type="image/webp">
+                  <img src="${product.image_url}" alt="${product[currentLang]}" loading="lazy">
+                </picture>
+                <div class="product-info">
+                  <h3>${product[currentLang]}</h3>
+                  <p class="product-price">${product.weight} - €${product.price.toFixed(2)}</p>
+                  <button class="add-to-cart" data-id="${product.id}">${translations[currentLang]['form-submit']}</button>
+                </div>
+              `;
+              productsContainer.appendChild(slide);
+            }
+          });
+          initializeSwiper();
+          addCartEventListeners();
+        }
+      })
+      .catch(error => {
+        console.error('Error loading products:', error);
+        showNotification('خطا در بارگذاری محصولات. لطفاً دوباره تلاش کنید.');
       });
   }
 
@@ -247,7 +256,7 @@ document.addEventListener('DOMContentLoaded', () => {
       button.addEventListener('click', () => {
         const productId = button.dataset.id;
         const product = products.find(p => p.id === productId);
-        const cartItem = cart多元Items.find(item => item.id === productId);
+        const cartItem = cartItems.find(item => item.id === productId);
         if (cartItem) {
           cartItem.quantity += 1;
         } else {
@@ -270,60 +279,62 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function loadCart() {
     const cartTableBody = document.getElementById('cart-items');
-    cartTableBody.innerHTML = '';
-    let total = 0;
-    cartItems.forEach((item, index) => {
-      const subtotal = item.price * item.quantity;
-      total += subtotal;
-      const row = document.createElement('tr');
-      row.innerHTML = `
-        <td><img src="${item.image}" alt="${item.name}"> ${item.name}</td>
-        <td>€${item.price.toFixed(2)}</td>
-        <td>
-          <div class="cart-controls">
-            <button class="decrease" data-index="${index}">-</button>
-            <span>${item.quantity}</span>
-            <button class="increase" data-index="${index}">+</button>
-          </div>
-        </td>
-        <td>€${subtotal.toFixed(2)}</td>
-        <td><button class="remove" data-index="${index}">حذف</button></td>
-      `;
-      cartTableBody.appendChild(row);
-    });
-    document.getElementById('cart-total-amount').textContent = `€${total.toFixed(2)}`;
-
-    // Cart Controls
-    document.querySelectorAll('.increase').forEach(button => {
-      button.addEventListener('click', () => {
-        const index = button.dataset.index;
-        cartItems[index].quantity += 1;
-        localStorage.setItem('cartItems', JSON.stringify(cartItems));
-        loadCart();
+    if (cartTableBody) {
+      cartTableBody.innerHTML = '';
+      let total = 0;
+      cartItems.forEach((item, index) => {
+        const subtotal = item.price * item.quantity;
+        total += subtotal;
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td><img src="${item.image}" alt="${item.name}"> ${item.name}</td>
+          <td>€${item.price.toFixed(2)}</td>
+          <td>
+            <div class="cart-controls">
+              <button class="decrease" data-index="${index}">-</button>
+              <span>${item.quantity}</span>
+              <button class="increase" data-index="${index}">+</button>
+            </div>
+          </td>
+          <td>€${subtotal.toFixed(2)}</td>
+          <td><button class="remove" data-index="${index}">${translations[currentLang]['cart-actions']}</button></td>
+        `;
+        cartTableBody.appendChild(row);
       });
-    });
+      document.getElementById('cart-total-amount').textContent = `€${total.toFixed(2)}`;
 
-    document.querySelectorAll('.decrease').forEach(button => {
-      button.addEventListener('click', () => {
-        const index = button.dataset.index;
-        if (cartItems[index].quantity > 1) {
-          cartItems[index].quantity -= 1;
-        } else {
+      // Cart Controls
+      document.querySelectorAll('.increase').forEach(button => {
+        button.addEventListener('click', () => {
+          const index = button.dataset.index;
+          cartItems[index].quantity += 1;
+          localStorage.setItem('cartItems', JSON.stringify(cartItems));
+          loadCart();
+        });
+      });
+
+      document.querySelectorAll('.decrease').forEach(button => {
+        button.addEventListener('click', () => {
+          const index = button.dataset.index;
+          if (cartItems[index].quantity > 1) {
+            cartItems[index].quantity -= 1;
+          } else {
+            cartItems.splice(index, 1);
+          }
+          localStorage.setItem('cartItems', JSON.stringify(cartItems));
+          loadCart();
+        });
+      });
+
+      document.querySelectorAll('.remove').forEach(button => {
+        button.addEventListener('click', () => {
+          const index = button.dataset.index;
           cartItems.splice(index, 1);
-        }
-        localStorage.setItem('cartItems', JSON.stringify(cartItems));
-        loadCart();
+          localStorage.setItem('cartItems', JSON.stringify(cartItems));
+          loadCart();
+        });
       });
-    });
-
-    document.querySelectorAll('.remove').forEach(button => {
-      button.addEventListener('click', () => {
-        const index = button.dataset.index;
-        cartItems.splice(index, 1);
-        localStorage.setItem('cartItems', JSON.stringify(cartItems));
-        loadCart();
-      });
-    });
+    }
   }
 
   // Notification
@@ -395,4 +406,17 @@ document.addEventListener('DOMContentLoaded', () => {
           showNotification('خطا در ثبت سفارش. لطفاً دوباره تلاش کنید.');
         }
       } catch (error) {
-        showNotification('خ
+        showNotification('خطا در ارتباط با سرور. لطفاً دوباره تلاش کنید.');
+      }
+    });
+  }
+
+  // Initialize
+  updateLanguage();
+  if (window.location.pathname.includes('index.html') || window.location.pathname === '/') {
+    loadProducts();
+  }
+  if (window.location.pathname.includes('cart.html')) {
+    loadCart();
+  }
+});
