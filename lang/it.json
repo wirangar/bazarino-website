@@ -1,0 +1,18 @@
+{
+  "header": {
+    "title": "Bazarino",
+    "slogan": "Il vero sapore della Persia in Italia"
+  },
+  "navigation": {
+    "home": "Home",
+    "products": "Prodotti",
+    "about": "Chi siamo",
+    "contact": "Contatti"
+  },
+  "buttons": {
+    "addToCart": "Aggiungi al carrello",
+    "viewAll": "Vedi tutti",
+    "continueShopping": "Continua a comprare",
+    "checkout": "Checkout"
+  }
+}
