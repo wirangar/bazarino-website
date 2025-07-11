@@ -5,20 +5,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>بازارینو | فروشگاه ایرانی در ایتالیا | سفارش آنلاین محصولات ایرانی</title>
   <meta name="description" content="سفارش آنلاین محصولات اصیل ایرانی در ایتالیا با بازارینو | تحویل در پروجا و سراسر ایتالیا">
-  <meta property="og:image" content="https://wirangar.github.io/Bazarino-site/assets/img/social-preview.jpg">
+  <meta property="og:image" content="./assets/img/social-preview.jpg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css">
-  <link rel="stylesheet" href="assets/css/main.css">
-  <link rel="icon" href="assets/img/favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="./assets/css/main.css">
+  <link rel="icon" href="./assets/img/favicon.ico" type="image/x-icon">
 </head>
 <body>
   <!-- Preloader -->
   <div class="preloader">
     <div class="preloader-logo">
-      <img src="assets/img/logo-animated.svg" alt="بازارینو">
+      <img src="./assets/img/logo.svg" alt="بازارینو">
     </div>
     <div class="preloader-spinner"></div>
   </div>
@@ -32,7 +32,7 @@
     <div class="container">
       <nav class="navbar">
         <a href="#" class="logo">
-          <img src="assets/img/logo.svg" alt="بازارینو" width="120" height="60">
+          <img src="./assets/img/logo.webp" alt="بازارینو" width="120" height="60">
         </a>
         
         <div class="nav-links">
@@ -68,9 +68,7 @@
   <section class="hero">
     <div class="hero-bg">
       <div class="bg-particle" id="particles-js"></div>
-      <video autoplay muted loop playsinline>
-        <source src="assets/video/hero-bg.mp4" type="video/mp4">
-      </video>
+      <img src="./assets/img/hero-bg.png" alt="پس‌زمینه بازارینو" class="hero-bg-image">
     </div>
     
     <div class="container">
@@ -90,7 +88,7 @@
       </div>
       
       <div class="hero-image">
-        <img src="assets/img/hero-product.png" alt="محصولات بازارینو" class="floating">
+        <img src="./assets/img/hero-product.png" alt="محصولات بازارینو" class="floating">
       </div>
     </div>
     
@@ -111,7 +109,7 @@
       <div class="category-grid">
         <a href="#rice" class="category-card">
           <div class="category-icon">
-            <img src="assets/img/icons/rice.svg" alt="برنج">
+            <img src="./assets/img/icons/rice.svg" alt="برنج">
           </div>
           <h3>برنج ایرانی</h3>
           <p>انواع برنج مرغوب شمال</p>
@@ -119,7 +117,7 @@
         
         <a href="#nuts" class="category-card">
           <div class="category-icon">
-            <img src="assets/img/icons/nuts.svg" alt="خشکبار">
+            <img src="./assets/img/icons/nuts.svg" alt="خشکبار">
           </div>
           <h3>خشکبار</h3>
           <p>آجیل و میوه‌های خشک</p>
@@ -127,7 +125,7 @@
         
         <a href="#spices" class="category-card">
           <div class="category-icon">
-            <img src="assets/img/icons/spices.svg" alt="ادویه‌جات">
+            <img src="./assets/img/icons/spices.svg" alt="ادویه‌جات">
           </div>
           <h3>ادویه‌جات</h3>
           <p>ادویه‌های اصل ایرانی</p>
@@ -135,7 +133,7 @@
         
         <a href="#beverages" class="category-card">
           <div class="category-icon">
-            <img src="assets/img/icons/tea.svg" alt="نوشیدنی‌ها">
+            <img src="./assets/img/icons/tea.svg" alt="نوشیدنی‌ها">
           </div>
           <h3>نوشیدنی‌ها</h3>
           <p>چای، قهوه و عرقیجات</p>
@@ -160,7 +158,7 @@
       </div>
       
       <div class="product-grid" id="product-container">
-        <!-- Products will be loaded dynamically -->
+        <!-- Products will be loaded dynamically from products.json -->
       </div>
       
       <div class="view-all">
@@ -204,7 +202,7 @@
           <a href="#" class="about-btn">بیشتر درباره ما</a>
         </div>
         <div class="about-image">
-          <img src="assets/img/about-us.jpg" alt="درباره بازارینو" class="parallax">
+          <img src="./assets/img/about-us.jpg" alt="درباره بازارینو" class="parallax">
           <div class="about-badge">
             <span>تضمین کیفیت</span>
           </div>
@@ -234,7 +232,7 @@
               </div>
               <p class="testimonial-text">کیفیت برنج‌های بازارینو واقعاً عالیه. دقیقاً همون طعمی رو داره که تو ایران می‌خریدم. ممنون از خدمات خوبتون</p>
               <div class="testimonial-author">
-                <img src="assets/img/testimonials/1.jpg" alt="مریم">
+                <img src="./assets/img/testimonials/1.jpg" alt="مریم">
                 <div class="author-info">
                   <h4>مریم</h4>
                   <span>رم</span>
@@ -254,7 +252,7 @@
               </div>
               <p class="testimonial-text">تحویل سریع و بسته‌بندی عالی. ادویه‌هایی که فرستادید واقعاً مرغوب و خوش‌عطر بودن. حتماً دوباره سفارش میدم</p>
               <div class="testimonial-author">
-                <img src="assets/img/testimonials/2.jpg" alt="علی">
+                <img src="./assets/img/testimonials/2.jpg" alt="علی">
                 <div class="author-info">
                   <h4>علی</h4>
                   <span>میلان</span>
@@ -274,7 +272,7 @@
               </div>
               <p class="testimonial-text">به عنوان یک ایرانی مقیم ایتالیا، پیدا کردن محصولات باکیفیت ایرانی همیشه چالش بود تا اینکه بازارینو رو پیدا کردم. واقعاً عالین!</p>
               <div class="testimonial-author">
-                <img src="assets/img/testimonials/3.jpg" alt="نازنین">
+                <img src="./assets/img/testimonials/3.jpg" alt="نازنین">
                 <div class="author-info">
                   <h4>نازنین</h4>
                   <span>پروجا</span>
@@ -386,7 +384,7 @@
     <div class="container">
       <div class="footer-grid">
         <div class="footer-col">
-          <img src="assets/img/logo-white.svg" alt="بازارینو" class="footer-logo">
+          <img src="./assets/img/logo.webp" alt="بازارینو" class="footer-logo">
           <p class="footer-about">بازارینو ارائه‌دهنده محصولات باکیفیت ایرانی به هموطنان عزیز در ایتالیا با هدف حفظ طعم و اصالت ایرانی</p>
         </div>
         
@@ -436,10 +434,10 @@
           <p>&copy; <span id="currentYear"></span> بازارینو. تمامی حقوق محفوظ است.</p>
         </div>
         <div class="payment-methods">
-          <img src="assets/img/payments/visa.svg" alt="Visa">
-          <img src="assets/img/payments/mastercard.svg" alt="Mastercard">
-          <img src="assets/img/payments/paypal.svg" alt="PayPal">
-          <img src="assets/img/payments/bank-transfer.svg" alt="Bank Transfer">
+          <img src="./assets/img/payments/visa.svg" alt="Visa">
+          <img src="./assets/img/payments/mastercard.svg" alt="Mastercard">
+          <img src="./assets/img/payments/paypal.svg" alt="PayPal">
+          <img src="./assets/img/payments/bank-transfer.svg" alt="Bank Transfer">
         </div>
       </div>
     </div>
@@ -458,7 +456,7 @@
           <!-- Cart items will be loaded dynamically -->
         </div>
         <div class="cart-empty">
-          <img src="assets/img/empty-cart.svg" alt="سبد خرید خالی">
+          <img src="./assets/img/empty-cart.svg" alt="سبد خرید خالی">
           <p>سبد خرید شما خالی است</p>
           <a href="#products" class="continue-shopping">ادامه خرید</a>
         </div>
@@ -476,9 +474,8 @@
   <!-- Scripts -->
   <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
-  
-  <script src="js/products.js" type="module"></script>
-  <script src="js/cart.js" type="module"></script>
-<script src="js/main.js" type="module"></script>
+  <script src="./assets/js/products.js" type="module"></script>
+  <script src="./assets/js/cart.js" type="module"></script>
+  <script src="./assets/js/main.js" type="module"></script>
 </body>
 </html>
