@@ -184,22 +184,43 @@ document.addEventListener('DOMContentLoaded', () => {
   // Set Year in Footer
   document.getElementById('year').textContent = new Date().getFullYear();
 
-  // Load Products
+  // Google Sheets API Configuration
+  const SPREADSHEET_ID = 'YOUR_GOOGLE_SHEET_ID';
+  const API_KEY = 'YOUR_GOOGLE_API_KEY';
+  const PRODUCTS_SHEET = 'Products';
+  const ORDERS_SHEET = 'Orders';
+  
+  // Telegram Bot Configuration
+  const TELEGRAM_BOT_TOKEN = 'YOUR_TELEGRAM_BOT_TOKEN';
+  const TELEGRAM_CHAT_ID = 'YOUR_TELEGRAM_CHAT_ID';
+
+  // Load Products from Google Sheets
   let products = [];
-  function loadProducts(searchTerm = '') {
-    fetch('assets/js/products.json')
-      .then(response => response.json())
-      .then(data => {
-        products = data;
+  async function loadProducts(searchTerm = '') {
+    try {
+      const response = await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${SPREADSHEET_ID}/values/${PRODUCTS_SHEET}?key=${API_KEY}`);
+      const data = await response.json();
+      
+      if (data.values && data.values.length > 1) {
+        const headers = data.values[0];
+        products = data.values.slice(1).map(row => {
+          const product = {};
+          headers.forEach((header, index) => {
+            product[header.toLowerCase()] = row[index];
+          });
+          return product;
+        });
+        
         const filteredProducts = products.filter(product => 
-          product[currentLang].toLowerCase().includes(searchTerm.toLowerCase()) ||
-          product.cat.toLowerCase().includes(searchTerm.toLowerCase())
+          product[currentLang]?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          product.cat?.toLowerCase().includes(searchTerm.toLowerCase())
         );
+        
         const productsContainer = document.getElementById('products-container');
         if (productsContainer) {
           productsContainer.innerHTML = '';
           filteredProducts.forEach(product => {
-            if (product.is_bestseller) {
+            if (product.is_bestseller === 'TRUE') {
               const slide = document.createElement('div');
               slide.className = 'swiper-slide product-card';
               slide.innerHTML = `
@@ -209,7 +230,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 </picture>
                 <div class="product-info">
                   <h3>${product[currentLang]}</h3>
-                  <p class="product-price">${product.weight} - €${product.price.toFixed(2)}</p>
+                  <p class="product-price">${product.weight} - €${parseFloat(product.price).toFixed(2)}</p>
                   <button class="add-to-cart" data-id="${product.id}">${translations[currentLang]['form-submit']}</button>
                 </div>
               `;
@@ -219,11 +240,11 @@ document.addEventListener('DOMContentLoaded', () => {
           initializeSwiper();
           addCartEventListeners();
         }
-      })
-      .catch(error => {
-        console.error('Error loading products:', error);
-        showNotification('خطا در بارگذاری محصولات. لطفاً دوباره تلاش کنید.');
-      });
+      }
+    } catch (error) {
+      console.error('Error loading products:', error);
+      showNotification('خطا در بارگذاری محصولات. لطفاً دوباره تلاش کنید.');
+    }
   }
 
   // Initialize Swiper
@@ -263,7 +284,7 @@ document.addEventListener('DOMContentLoaded', () => {
           cartItems.push({
             id: productId,
             name: product[currentLang],
-            price: product.price,
+            price: parseFloat(product.price),
             quantity: 1,
             image: product.image_url
           });
@@ -360,6 +381,79 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // Send Order to Telegram
+  async function sendToTelegram(orderData) {
+    try {
+      let message = `📦 *New Order Received* 📦\n\n`;
+      message += `👤 *Customer*: ${orderData.name}\n`;
+      message += `📱 *Phone*: ${orderData.phone}\n`;
+      message += `📍 *Address*: ${orderData.address}\n`;
+      message += `📮 *Postal Code*: ${orderData.destination}\n\n`;
+      message += `🛒 *Order Items*:\n`;
+      
+      orderData.products.forEach(item => {
+        message += `- ${item.product_name} (${item.quantity}x): €${item.subtotal.toFixed(2)}\n`;
+      });
+      
+      message += `\n💰 *Total*: €${orderData.products.reduce((sum, item) => sum + item.subtotal, 0).toFixed(2)}\n`;
+      message += `📝 *Notes*: ${orderData.notes || 'None'}\n`;
+      message += `🎟️ *Discount Code*: ${orderData.discount_code || 'None'}\n\n`;
+      message += `🆔 *Order ID*: ${orderData.order_id}`;
+      
+      const response = await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          chat_id: TELEGRAM_CHAT_ID,
+          text: message,
+          parse_mode: 'Markdown'
+        })
+      });
+      
+      return response.ok;
+    } catch (error) {
+      console.error('Error sending to Telegram:', error);
+      return false;
+    }
+  }
+
+  // Save Order to Google Sheets
+  async function saveOrderToSheet(orderData) {
+    try {
+      const values = [
+        [
+          orderData.timestamp,
+          orderData.order_id,
+          orderData.name,
+          orderData.phone,
+          orderData.address,
+          orderData.destination,
+          JSON.stringify(orderData.products),
+          orderData.notes,
+          orderData.discount_code,
+          orderData.status
+        ]
+      ];
+      
+      const response = await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${SPREADSHEET_ID}/values/${ORDERS_SHEET}!A:J:append?valueInputOption=USER_ENTERED&key=${API_KEY}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          values: values
+        })
+      });
+      
+      return response.ok;
+    } catch (error) {
+      console.error('Error saving to Google Sheets:', error);
+      return false;
+    }
+  }
+
   // Order Submission
   const orderForm = document.getElementById('order-form');
   if (orderForm) {
@@ -369,11 +463,10 @@ document.addEventListener('DOMContentLoaded', () => {
         showNotification('سبد خرید خالی است!');
         return;
       }
+      
       const formData = {
         timestamp: new Date().toISOString(),
         order_id: `ORDER_${Date.now()}`,
-        user_id: `USER_${Date.now()}`,
-        handle: '@BazarinoUser',
         name: document.getElementById('name').value,
         phone: document.getElementById('phone').value,
         address: document.getElementById('address').value,
@@ -387,18 +480,17 @@ document.addEventListener('DOMContentLoaded', () => {
         })),
         notes: document.getElementById('notes').value,
         discount_code: document.getElementById('discount-code').value,
-        discount_amount: 0,
-        status: 'Pending',
-        notified: false
+        status: 'Pending'
       };
 
       try {
-        const response = await fetch('YOUR_GOOGLE_APPS_SCRIPT_URL', {
-          method: 'POST',
-          body: JSON.stringify(formData),
-          headers: { 'Content-Type': 'application/json' }
-        });
-        if (response.ok) {
+        // Send to Telegram
+        const telegramSent = await sendToTelegram(formData);
+        
+        // Save to Google Sheets
+        const sheetSaved = await saveOrderToSheet(formData);
+        
+        if (telegramSent && sheetSaved) {
           cartItems = [];
           localStorage.setItem('cartItems', JSON.stringify(cartItems));
           window.location.href = 'thankyou.html';
