@@ -3,9 +3,17 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title data-lang="about-title">درباره ما | بازارینو</title>
+  <title data-lang="title">بازارینو | فروشگاه ایرانی در ایتالیا | سفارش آنلاین محصولات ایرانی</title>
+  <meta name="description" content="سفارش آنلاین محصولات اصیل ایرانی در ایتالیا با بازارینو | ربات تلگرامی هوشمند | تحویل در پروجا و سراسر ایتالیا">
+  <meta name="keywords" content="خرید ایرانی در ایتالیا, محصولات ایرانی, بازارینو, فروشگاه ایرانی, پروجا, ایرانیان ایتالیا">
+  <meta property="og:title" content="بازارینو | فروشگاه ایرانی در ایتالیا">
+  <meta property="og:description" content="سفارش آنلاین محصولات اصیل ایرانی در ایتالیا">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://wirangar.github.io/Bazarino-site/">
+  <link rel="icon" href="assets/img/logo.png" type="image/png">
   <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
   <link rel="stylesheet" href="assets/css/main.css">
 </head>
 <body>
@@ -29,15 +37,69 @@
   </header>
 
   <main class="main-content">
-    <section class="about-section container">
-      <h2 class="section-title" data-lang="about-title">درباره بازارینو</h2>
-      <div class="about-content">
-        <p data-lang="about-text">
-          بازارینو با هدف آوردن طعم و اصالت محصولات ایرانی به ایرانیان مقیم ایتالیا تأسیس شد. ما در بازارینو تلاش می‌کنیم تا با ارائه محصولات باکیفیت و اصیل ایرانی، از برنج و زعفران گرفته تا شیرینی‌های سنتی و کنسروهای آماده، حس خانه را به شما هدیه دهیم. تیم ما در پروجا مستقر است و خدمات خود را به سراسر ایتالیا ارائه می‌دهد.
+    <!-- Intro Section -->
+    <section class="intro-section container">
+      <div class="intro-text">
+        <p data-lang="intro-greeting">سلام به <span class="highlight">بازارینو</span> خوش آمدید! ✋</p>
+        <p data-lang="intro-text">
+          بازارینو یک ربات تلگرامی هوشمند است که مخصوص ایرانیان مقیم ایتالیا طراحی شده تا بتوانند به سادگی محصولات اصیل ایرانی شامل برنج، خشکبار، ادویه‌جات، نوشیدنی‌ها و کنسروها را سفارش دهند و در <strong>شهر پروجا</strong> یا <strong>سراسر ایتالیا</strong> تحویل بگیرند.
         </p>
-        <p data-lang="about-mission">
-          ماموریت ما ایجاد تجربه‌ای آسان و دلپذیر برای خرید محصولات ایرانی است. با استفاده از ربات تلگرامی هوشمند و وب‌سایت کاربرپسند، شما می‌توانید به راحتی سفارش دهید و محصولات را درب منزل تحویل بگیرید.
+      </div>
+      
+      <div class="features">
+        <div class="feature-card">
+          <i class="fas fa-shipping-fast"></i>
+          <h3 data-lang="feature-delivery-title">تحویل سریع و مطمئن</h3>
+          <p data-lang="feature-delivery-text">ارسال به تمام نقاط ایتالیا با بهترین روش‌های حمل و نقل در کمترین زمان ممکن</p>
+        </div>
+        
+        <div class="feature-card">
+          <i class="fas fa-check-double"></i>
+          <h3 data-lang="feature-quality-title">کیفیت تضمینی</h3>
+          <p data-lang="feature-quality-text">محصولات با کیفیت و اصیل ایرانی با گارانتی بازگشت وجه در صورت عدم رضایت</p>
+        </div>
+        
+        <div class="feature-card">
+          <i class="fas fa-headset"></i>
+          <h3 data-lang="feature-support-title">پشتیبانی همه‌جانبه</h3>
+          <p data-lang="feature-support-text">پشتیبانی فارسی‌زبان به صورت 24 ساعته و 7 روز هفته برای پاسخگویی به شما</p>
+        </div>
+      </div>
+      
+      <div class="cta-container">
+        <a href="https://t.me/Bazarino_perugia_bot" class="cta-button">
+          <i class="fab fa-telegram"></i>
+          <span data-lang="cta-button">ورود به ربات تلگرامی بازارینو</span>
+        </a>
+        <p class="cta-note" data-lang="cta-note">کلیک کنید و مستقیماً به ربات ما در تلگرام متصل شوید</p>
+      </div>
+    </section>
+
+    <!-- Search Bar -->
+    <section class="search-bar container">
+      <input type="text" id="search-input" placeholder="جستجوی محصولات..." data-lang-placeholder="search-placeholder">
+    </section>
+
+    <!-- Products Section -->
+    <section class="products-section container">
+      <h2 class="section-title" data-lang="products-title">محصولات پرطرفدار</h2>
+      <div class="swiper products-slider">
+        <div class="swiper-wrapper" id="products-container"></div>
+        <div class="swiper-pagination"></div>
+      </div>
+    </section>
+
+    <!-- Poem Section -->
+    <section class="poem-section container">
+      <div class="poem-box">
+        <p data-lang="poem">
+          آب حیات نامده‌ای زان لب شیرین هنوز<br>
+          در دل من مانده از آن لعل شکرخا خاطری
         </p>
+        <div class="translation" data-lang="poem-translation">
+          Non ho ancora bevuto l'acqua della vita da quelle labbra dolci,<br>
+          ma il ricordo del tuo sorriso zuccherato vive ancora nel mio cuore.
+        </div>
       </div>
     </section>
 
@@ -90,6 +152,7 @@
     <i class="fab fa-whatsapp"></i>
   </a>
 
+  <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
   <script src="assets/js/main.js"></script>
 </body>
 </html>
