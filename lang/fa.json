@@ -1,0 +1,18 @@
+{
+  "header": {
+    "title": "بازارینو",
+    "slogan": "طعم اصیل ایران در ایتالیا"
+  },
+  "navigation": {
+    "home": "خانه",
+    "products": "محصولات",
+    "about": "درباره ما",
+    "contact": "تماس با ما"
+  },
+  "buttons": {
+    "addToCart": "افزودن به سبد",
+    "viewAll": "مشاهده همه",
+    "continueShopping": "ادامه خرید",
+    "checkout": "تکمیل سفارش"
+  }
+}
