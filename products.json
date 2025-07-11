@@ -1,0 +1,40 @@
+[
+  {
+    "id": "PR-001",
+    "name": {
+      "fa": "برنج طارم ممتاز",
+      "it": "Riso Tarom Hashemi",
+      "en": "Tarom Hashemi Rice"
+    },
+    "category": "rice",
+    "price": 12.50,
+    "discount": 10,
+    "weight": "5kg",
+    "isNew": false,
+    "isBestseller": true,
+    "description": {
+      "fa": "برنج طارم ممتاز شمال ایران با عطر و طعم بی‌نظیر. مناسب برای پلوهای ایرانی و غذای سنتی.",
+      "it": "Riso Tarom Hashemi di alta qualità del nord Iran con aroma e sapore eccezionali."
+    },
+    "image": "assets/img/products/rice.jpg"
+  },
+  {
+    "id": "PR-002",
+    "name": {
+      "fa": "زعفران سرگل",
+      "it": "Zafferano Sargol",
+      "en": "Sargol Saffron"
+    },
+    "category": "spices",
+    "price": 15.90,
+    "discount": 0,
+    "weight": "2g",
+    "isNew": true,
+    "isBestseller": false,
+    "description": {
+      "fa": "زعفران سرگل ممتاز قائنات با کیفیت عالی و رنگ‌دهی فوق‌العاده.",
+      "it": "Zafferano Sargol di altissima qualità dalla regione di Qaen."
+    },
+    "image": "assets/img/products/saffron.jpg"
+  }
+]
